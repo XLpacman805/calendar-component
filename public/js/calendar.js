@@ -80,6 +80,8 @@ class Calendar extends HTMLElement {
             this.setActiveDate(getPreviousMonth(this.activeDate));
         } else if (event.target.classList.contains('next-month')) {
             this.setActiveDate(getNextMonth(this.activeDate));
+        } else if (event.target.tagName === 'TD') {
+            this.setActiveDate(new Date(event.target.dataset.date));
         }
     }
 
@@ -92,7 +94,7 @@ class Calendar extends HTMLElement {
 
     createDateView(date) {
         return `
-            <div class="date-view" style="border: 1px solid white;">
+            <div class="date-view">
                 <h3> ${this.dayMap.get(date.getDay())} </h3>
                 <h2> ${date.getDate()} </h2>
             </div>
@@ -112,7 +114,7 @@ class Calendar extends HTMLElement {
     createCalendarView(calendar) {
         const rows = calendar.map(week => `<tr> ${week.map(date => `<td data-date="${date.toISOString()}"> ${date.getDate()} </td>`).join('')} </tr>`).join('');
         return `
-            <div class="calendar-grid" style="border 1px solid white;">
+            <div class="calendar-grid">
                 <table>
                     <tbody>
                         <tr>
@@ -133,10 +135,12 @@ class Calendar extends HTMLElement {
 
     render() {
         this.innerHTML = `
-            ${this.createDateView(this.activeDate)}
-            <div class="calendar-container" style="border: 1px solid white;">
-                ${this.createCalendarControls(this.activeDate)}
-                ${this.createCalendarView(createCalendar(this.activeDate))}
+            <div class="jm-calendar">
+                ${this.createDateView(this.activeDate)}
+                <div class="calendar-container">
+                    ${this.createCalendarControls(this.activeDate)}
+                    ${this.createCalendarView(createCalendar(this.activeDate))}
+                </div>
             </div>
         `;
     }
