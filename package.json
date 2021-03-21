@@ -1,0 +1,19 @@
+{
+  "name": "calendar-component",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -r esm",
+    "start": "nodemon -e html,css,js --watch public --exec \"npx http-server"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "esm": "^3.2.25",
+    "http-server": "^0.12.3",
+    "mocha": "^8.3.2",
+    "nodemon": "^2.0.7"
+  }
+}
