@@ -1,2 +1,2 @@
-import {createCalendar, getPreviousMonth} from './calendar.js';
+import './calendar.js';
 

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha -r esm",
-    "start": "nodemon -e html,css,js --watch public --exec \"npx http-server"
+    "start": "nodemon -e html,css,js --watch public --exec \"npx http-server\""
   },
   "author": "",
   "license": "ISC",

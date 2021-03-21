@@ -41,4 +41,90 @@ const getNextMonth = (date) => {
     return d;
 }
 
+class Calendar extends HTMLElement {
+    constructor() {
+        super();
+        this.activeDate = new Date();
+        this.dayMap = new Map([
+            [0, 'Sunday'],
+            [1, 'Monday'],
+            [2, 'Tuesday'],
+            [3, 'Wednesday'],
+            [4, 'Thursday'],
+            [5, 'Friday'],
+            [6, 'Saturday']
+        ]);
+        this.monthMap = new Map([
+            [0, 'January'],
+            [1, 'February'],
+            [2, 'March'],
+            [3, 'April'],
+            [4, 'May'],
+            [5, 'June'],
+            [6, 'July'],
+            [7, 'August'],
+            [8, 'September'],
+            [9, 'October'],
+            [10, 'November'],
+            [11, 'December']
+        ]);
+    }
+
+    connectedCallback() {
+        this.render();
+    }
+
+    createDateView(date) {
+        return `
+            <div class="date-view" style="border: 1px solid white;">
+                <h3> ${this.dayMap.get(date.getDay())} </h3>
+                <h2> ${date.getDate()} </h2>
+            </div>
+        `;
+    }
+
+    createCalendarControls(date) {
+        return `
+            <div class="calendar-controls">
+                <button class="previous-month"> << </button>
+                <h3> ${this.monthMap.get(date.getMonth())} </h3>
+                <button class="next-month"> >> </button>
+            </div>
+        `;
+    }
+
+    createCalendarView(calendar) {
+        const rows = calendar.map(week => `<tr> ${week.map(date => `<td data-date="${date.toISOString()}"> ${date.getDate()} </td>`).join('')} </tr>`).join('');
+        return `
+            <div class="calendar-grid" style="border 1px solid white;">
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>S</th>
+                            <th>M</th>
+                            <th>T</th>
+                            <th>W</th>
+                            <th>Th</th>
+                            <th>F</th>
+                            <th>Sa</th>
+                        </tr>
+                        ${rows}
+                    </tbody>
+                </table>
+            </div>
+        `;
+    }
+
+    render() {
+        this.innerHTML = `
+            ${this.createDateView(this.activeDate)}
+            <div class="calendar-container" style="border: 1px solid white;">
+                ${this.createCalendarControls(this.activeDate)}
+                ${this.createCalendarView(createCalendar(this.activeDate))}
+            </div>
+        `;
+    }
+}
+
+customElements.define('jm-calendar', Calendar);
 export {getPreviousMonth, getNextMonth, createCalendar}
