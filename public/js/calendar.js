@@ -68,10 +68,26 @@ class Calendar extends HTMLElement {
             [10, 'November'],
             [11, 'December']
         ]);
+        this.addEventListener('click', this.handleClick);
     }
 
     connectedCallback() {
         this.render();
+    }
+
+    handleClick(event) {
+        if (event.target.classList.contains('previous-month')) {
+            this.setActiveDate(getPreviousMonth(this.activeDate));
+        } else if (event.target.classList.contains('next-month')) {
+            this.setActiveDate(getNextMonth(this.activeDate));
+        }
+    }
+
+    setActiveDate(date) {
+        if (date instanceof Date) {
+            this.activeDate = date;
+            this.render();
+        }
     }
 
     createDateView(date) {
@@ -87,7 +103,7 @@ class Calendar extends HTMLElement {
         return `
             <div class="calendar-controls">
                 <button class="previous-month"> << </button>
-                <h3> ${this.monthMap.get(date.getMonth())} </h3>
+                <h3> ${this.monthMap.get(date.getMonth()) + ' ' + date.getFullYear().toString()} </h3>
                 <button class="next-month"> >> </button>
             </div>
         `;
