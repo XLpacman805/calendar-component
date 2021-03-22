@@ -1,4 +1,22 @@
 body {
-    background-color: rgba(0, 0, 0, 0.9);
-    color: white;
+    background-color: whitesmoke;
+}
+
+.jm-calendar {
+    display: flex;
+    max-width: 400px;
+    background-color: white;
+}
+
+.jm-calendar > .date-view {
+    width: 50%
+}
+
+.jm-calendar .calendar-controls {
+    display: inline-flex;
+}
+
+.jm-calendar .calendar-grid td:hover,
+.jm-calendar .calendar-grid .active {
+    background-color: yellow;
 }

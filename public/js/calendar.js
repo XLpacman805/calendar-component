@@ -41,6 +41,12 @@ const getNextMonth = (date) => {
     return d;
 }
 
+const compareDates = (dateA, dateB) => {
+    const a = dateA.getFullYear().toString() + dateA.getMonth().toString() + dateA.getDate().toString();
+    const b = dateB.getFullYear().toString() + dateB.getMonth().toString() + dateB.getDate().toString();
+    return a === b;
+}
+
 class Calendar extends HTMLElement {
     constructor() {
         super();
@@ -112,7 +118,7 @@ class Calendar extends HTMLElement {
     }
 
     createCalendarView(calendar) {
-        const rows = calendar.map(week => `<tr> ${week.map(date => `<td data-date="${date.toISOString()}"> ${date.getDate()} </td>`).join('')} </tr>`).join('');
+        const rows = calendar.map(week => `<tr> ${week.map(date => `<td ${compareDates(date, this.activeDate) ? 'class="active"' : ''} data-date="${date.toISOString()}"> ${date.getDate()} </td>`).join('')} </tr>`).join('');
         return `
             <div class="calendar-grid">
                 <table>
